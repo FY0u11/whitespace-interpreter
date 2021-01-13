@@ -12,8 +12,13 @@ export class Whitespace {
         for (let char of this.sourceCode) {
             if (sB.setChar(char)) {
                 const sentence = sB.getSentence()
-                sentence.execute()
-                sB.reset()
+                try {
+                    sentence.execute()
+                } catch (e) {
+                    throw new Error(e.message)
+                } finally {
+                    sB.reset()
+                }
             }
         }
     }
