@@ -17,7 +17,7 @@ export enum OperationTypes {
     ARITHMETICS_SUBTRACT =              'ARITHMETICS_SUBTRACT',
     ARITHMETICS_MUL =                   'ARITHMETICS_MUL',
     ARITHMETICS_DIV =                   'ARITHMETICS_DIV',
-    ARITHMETICS_MODULE =                'ARITHMETICS_MODULE'
+    ARITHMETICS_MOD =                   'ARITHMETICS_MOD'
 }
 
 export enum DataTypes {

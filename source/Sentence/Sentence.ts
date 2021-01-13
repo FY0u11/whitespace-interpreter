@@ -47,7 +47,7 @@ const operations = {
                     operation: OperationTypes.ARITHMETICS_DIV
                 },
                 TAB: {
-                    operation: OperationTypes.ARITHMETICS_MODULE
+                    operation: OperationTypes.ARITHMETICS_MOD
                 }
             }
         }

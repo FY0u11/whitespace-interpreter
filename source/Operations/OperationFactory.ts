@@ -10,6 +10,7 @@ import { Sum } from './Arithmetics/Sum'
 import { Subtract } from './Arithmetics/Subtract'
 import { Mul } from './Arithmetics/Mul'
 import { Div } from './Arithmetics/Div'
+import { Mod } from './Arithmetics/Mod'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -24,6 +25,7 @@ export class OperationFactory {
            case OperationTypes.ARITHMETICS_SUBTRACT: return new Subtract()
            case OperationTypes.ARITHMETICS_MUL: return new Mul()
            case OperationTypes.ARITHMETICS_DIV: return new Div()
+           case OperationTypes.ARITHMETICS_MOD: return new Mod()
            default: throw new Error('Not implemented yet ' + type)
        }
     }

@@ -136,3 +136,36 @@ describe('Arithmetic tests: DIV operation', () => {
         assert.strictEqual(new Stack().getStack().length, 1)
     })
 })
+
+describe('Arithmetic tests: MOD operation', () => {
+    it('Should mod 10 by -25 and push result into the stack', () => {
+        new Whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(10, -25)).readSourceCode()
+        new Whitespace('\t \t\t').readSourceCode()
+        assert.strictEqual(new Stack().getStack().length, 3)
+        assert.strictEqual(new Stack().getStack()[2], -15)
+    })
+    it('Should mod 10 by 15 and push result into the stack', () => {
+        new Whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(10, 15)).readSourceCode()
+        new Whitespace('\t \t\t').readSourceCode()
+        assert.strictEqual(new Stack().getStack().length, 3)
+        assert.strictEqual(new Stack().getStack()[2], 10)
+    })
+    it('Should mod -20 by -40 and push result into the stack', () => {
+        new Whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(10, 20, -20, -40)).readSourceCode()
+        new Whitespace('\t \t\t').readSourceCode()
+        assert.strictEqual(new Stack().getStack().length, 5)
+        assert.strictEqual(new Stack().getStack()[4], -20)
+    })
+    it('Should throw an error when divisor is 0', () => {
+        new Whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(50, 0)).readSourceCode()
+        try {
+            new Whitespace('\t \t\t').readSourceCode()
+            assert.fail()
+        } catch (e) {}
+    })
+    it('Should do nothing when stack.length <= 1', () => {
+        new Whitespace('  \t\n').readSourceCode()
+        new Whitespace('\t \t\t').readSourceCode()
+        assert.strictEqual(new Stack().getStack().length, 1)
+    })
+})
