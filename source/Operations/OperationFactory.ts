@@ -6,6 +6,7 @@ import { DiscardMany } from './Stack/DiscardMany'
 import { DuplicateOne } from './Stack/DuplicateOne'
 import { DuplicateNth } from './Stack/DuplicateNth'
 import { OperationTypes } from '../types'
+import { Sum } from './Arithmetics/Sum'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -16,6 +17,7 @@ export class OperationFactory {
            case OperationTypes.STACK_DISCARD_MANY: return new DiscardMany()
            case OperationTypes.STACK_DUPLICATE_ONE: return new DuplicateOne()
            case OperationTypes.STACK_DUPLICATE_NTH: return new DuplicateNth()
+           case OperationTypes.ARITHMETICS_SUM: return new Sum()
            default: throw new Error('Not implemented yet ' + type)
        }
     }

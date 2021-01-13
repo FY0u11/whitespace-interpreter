@@ -56,7 +56,7 @@ export class Stack implements IStack {
     }
 
     getStack () {
-        return this.stack
+        return [...this.stack]
     }
 
     reset () {

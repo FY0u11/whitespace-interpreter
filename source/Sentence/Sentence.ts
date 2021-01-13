@@ -30,7 +30,27 @@ const operations = {
         }
     },
     TAB: {
-
+        SPACE: {
+            SPACE: {
+                SPACE: {
+                    operation: OperationTypes.ARITHMETICS_SUM
+                },
+                TAB: {
+                    operation: OperationTypes.ARITHMETICS_SUBTRACT
+                },
+                NEW_LINE: {
+                    operation: OperationTypes.ARITHMETICS_MUL
+                }
+            },
+            TAB: {
+                SPACE: {
+                    operation: OperationTypes.ARITHMETICS_DIV
+                },
+                TAB: {
+                    operation: OperationTypes.ARITHMETICS_MODULE
+                }
+            }
+        }
     },
     NEW_LINE: {
 
