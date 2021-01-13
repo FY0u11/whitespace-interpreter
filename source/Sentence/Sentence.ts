@@ -50,10 +50,21 @@ const operations = {
                     operation: OperationTypes.ARITHMETICS_MOD
                 }
             }
+        },
+        NEW_LINE: {
+            SPACE: {
+                TAB: {
+                    operation: OperationTypes.IO_OUTPUT_NUMBER
+                }
+            }
         }
     },
     NEW_LINE: {
-
+        NEW_LINE: {
+            NEW_LINE: {
+                operation: OperationTypes.FLOW_CONTROL_EXIT
+            }
+        }
     }
 }
 
@@ -101,11 +112,11 @@ export class Sentence {
         }
     }
 
-    public execute () {
+    public execute (): void | string {
         if (this.state === SentenceStates.READY) {
             const operationFactory = new OperationFactory()
             const operation = operationFactory.getOperation(this.operationType!)
-            operation.run(this.sign === SPACE ? this.number : -this.number)
+            return operation.run(this.sign === SPACE ? this.number : -this.number)
         }
     }
 

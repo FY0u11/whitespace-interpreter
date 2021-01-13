@@ -16,6 +16,10 @@ export class Stack implements IStack {
         this.stack.push(number)
     }
 
+    pop (): number | undefined {
+        return this.stack.pop()
+    }
+
     swap () {
         if (this.stack.length >= 2) {
             const length = this.stack.length

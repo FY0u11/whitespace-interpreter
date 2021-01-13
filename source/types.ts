@@ -1,6 +1,7 @@
 export const SPACE =                    'SPACE'
 export const TAB =                      'TAB'
 export const NEW_LINE =                 'NEW_LINE'
+export const EXIT_COMMAND =             '$EXIT$'
 export const allowedCharacters =        { ' ': SPACE, '\t' : TAB, '\n' : NEW_LINE }
 export type SentenceChar =              typeof SPACE
                                       | typeof TAB
@@ -17,7 +18,9 @@ export enum OperationTypes {
     ARITHMETICS_SUBTRACT =              'ARITHMETICS_SUBTRACT',
     ARITHMETICS_MUL =                   'ARITHMETICS_MUL',
     ARITHMETICS_DIV =                   'ARITHMETICS_DIV',
-    ARITHMETICS_MOD =                   'ARITHMETICS_MOD'
+    ARITHMETICS_MOD =                   'ARITHMETICS_MOD',
+    IO_OUTPUT_NUMBER =                  'IO_OUTPUT_NUMBER',
+    FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT'
 }
 
 export enum DataTypes {
