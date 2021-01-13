@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "build": "tsc",
     "watch": "tsc -w",
     "nodemon": "nodemon dist"
@@ -21,7 +21,11 @@
   },
   "homepage": "https://github.com/FY0u11/whitespace-interpreter#readme",
   "devDependencies": {
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.20",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
 }
