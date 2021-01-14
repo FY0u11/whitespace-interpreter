@@ -11,6 +11,8 @@ import { Subtract } from './Arithmetics/Subtract'
 import { Mul } from './Arithmetics/Mul'
 import { Div } from './Arithmetics/Div'
 import { Mod } from './Arithmetics/Mod'
+import { OutputNumber } from './InputOutput/OutputNumber'
+import { Exit } from './FlowControl/Exit'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -26,6 +28,8 @@ export class OperationFactory {
            case OperationTypes.ARITHMETICS_MUL: return new Mul()
            case OperationTypes.ARITHMETICS_DIV: return new Div()
            case OperationTypes.ARITHMETICS_MOD: return new Mod()
+           case OperationTypes.IO_OUTPUT_NUMBER: return new OutputNumber()
+           case OperationTypes.FLOW_CONTROL_EXIT: return new Exit()
            default: throw new Error('Not implemented yet ' + type)
        }
     }
