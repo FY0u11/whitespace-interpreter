@@ -16,4 +16,8 @@ export class Utils {
             return args.reduce((sourceCode, arg) => sourceCode + `  ${Utils.encodeNumber(arg)}\n`, '')
         } else return '   \n   \t\n'
     }
+
+    static mod (n1: number, n2: number): number {
+        return ((n1 % n2) + n2) % n2;
+    }
 }

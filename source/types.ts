@@ -12,7 +12,12 @@ export enum OperationTypes {
     STACK_DUPLICATE_NTH =               'STACK_DUPLICATE_NTH',
     STACK_DISCARD_ONE =                 'STACK_DISCARD_ONE',
     STACK_DISCARD_MANY =                'STACK_DISCARD_MANY',
-    STACK_SWAP =                        'STACK_SWAP'
+    STACK_SWAP =                        'STACK_SWAP',
+    ARITHMETICS_SUM =                   'ARITHMETICS_SUM',
+    ARITHMETICS_SUBTRACT =              'ARITHMETICS_SUBTRACT',
+    ARITHMETICS_MUL =                   'ARITHMETICS_MUL',
+    ARITHMETICS_DIV =                   'ARITHMETICS_DIV',
+    ARITHMETICS_MOD =                   'ARITHMETICS_MOD'
 }
 
 export enum DataTypes {
