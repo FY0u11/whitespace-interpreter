@@ -1,10 +1,10 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 import { EXIT_COMMAND } from '../../types'
 
 export class Exit implements IOperation {
-    run (arg?: string | number): string {
-        new Stack().reset()
+    run (): string {
+        new Memory().reset()
         return EXIT_COMMAND
     }
 }

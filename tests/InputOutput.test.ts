@@ -1,11 +1,11 @@
 import * as assert from 'assert'
 import { whitespace } from '../source/Whitespace'
 import { beforeEach } from 'mocha'
-import { Stack } from '../source/Stack/Stack'
+import { Memory } from '../source/Memory/Memory'
 import { Utils } from '../source/Utils'
 
 beforeEach(() => {
-    new Stack().reset()
+    new Memory().reset()
 })
 
 describe('Input output tests: OUTPUT_NUMBER operation', () => {
@@ -17,11 +17,11 @@ describe('Input output tests: OUTPUT_NUMBER operation', () => {
     it('Should remove output value from the stack', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack())
         whitespace('\t\n \t')
-        assert.strictEqual(new Stack().getStack().length, 1)
+        assert.strictEqual(new Memory().getStack().length, 1)
     })
     it('Should do nothing when stack.length <= 1', () => {
         const result = whitespace('\t\n \t')
-        assert.strictEqual(new Stack().getStack().length, 0)
+        assert.strictEqual(new Memory().getStack().length, 0)
         assert.strictEqual(result, undefined)
     })
 })

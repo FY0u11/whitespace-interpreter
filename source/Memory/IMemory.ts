@@ -1,3 +1,3 @@
-export interface IStack {
+export interface IMemory {
     push (number: number): void
 }

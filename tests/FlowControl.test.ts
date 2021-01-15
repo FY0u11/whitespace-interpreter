@@ -1,11 +1,11 @@
 import * as assert from 'assert'
 import { whitespace } from '../source/Whitespace'
 import { beforeEach } from 'mocha'
-import { Stack } from '../source/Stack/Stack'
+import { Memory } from '../source/Memory/Memory'
 import { Utils } from '../source/Utils'
 
 beforeEach(() => {
-    new Stack().reset()
+    new Memory().reset()
 })
 
 describe('Flow control tests: EXIT operation', () => {
@@ -22,10 +22,10 @@ describe('Flow control tests: EXIT operation', () => {
     it('Should clean the stack when program is exited', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(1, 2, 3, 4, 5))
         whitespace('\n\n\n')
-        assert.strictEqual(new Stack().getStack().length, 0)
+        assert.strictEqual(new Memory().getStack().length, 0)
     })
     it('Should ignore all source code after \\n\\n\\n', () => {
         whitespace('\n\n\n' + Utils.getSourceCodeForPushingNNumbersIntoTheStack())
-        assert.strictEqual(new Stack().getStack().length, 0)
+        assert.strictEqual(new Memory().getStack().length, 0)
     })
 })

@@ -13,6 +13,8 @@ import { Div } from './Arithmetics/Div'
 import { Mod } from './Arithmetics/Mod'
 import { OutputNumber } from './InputOutput/OutputNumber'
 import { Exit } from './FlowControl/Exit'
+import { Store } from './HeapAccess/Store'
+import { HeapPushInStack } from './HeapAccess/HeapPushInStack'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -30,6 +32,8 @@ export class OperationFactory {
            case OperationTypes.ARITHMETICS_MOD: return new Mod()
            case OperationTypes.IO_OUTPUT_NUMBER: return new OutputNumber()
            case OperationTypes.FLOW_CONTROL_EXIT: return new Exit()
+           case OperationTypes.HEAP_PUSH: return new HeapPushInStack()
+           case OperationTypes.HEAP_STORE: return new Store()
            default: throw new Error('Not implemented yet ' + type)
        }
     }

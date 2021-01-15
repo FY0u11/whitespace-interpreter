@@ -1,8 +1,8 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class DiscardMany implements IOperation {
-    run (arg: string | number) {
-        new Stack().discard(arg as number)
+    run (arg: number) {
+        new Memory().discard(arg)
     }
 }

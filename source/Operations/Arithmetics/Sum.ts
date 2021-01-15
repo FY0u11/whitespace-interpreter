@@ -1,11 +1,11 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class Sum implements IOperation {
     run () {
-        const stack = new Stack().getStack()
+        const stack = new Memory().getStack()
         const n1 = stack.pop()
         const n2 = stack.pop()
-        if (n1 !== undefined && n2 !== undefined) new Stack().push(n1 + n2)
+        if (n1 !== undefined && n2 !== undefined) new Memory().push(n1 + n2)
     }
 }

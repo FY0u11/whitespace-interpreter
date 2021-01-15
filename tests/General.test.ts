@@ -1,9 +1,9 @@
 import * as assert from 'assert'
 import { Whitespace } from '../source/Whitespace'
-import { Stack } from '../source/Stack/Stack'
+import { Memory } from '../source/Memory/Memory'
 
 beforeEach(() => {
-    new Stack().reset()
+    new Memory().reset()
 })
 
 describe('General tests', () => {
@@ -12,8 +12,8 @@ describe('General tests', () => {
                             Suspendisse sit amet ligula\tsit amet\tmagna scelerisque blandit
                             `
         new Whitespace(sourceCode).readSourceCode()
-        assert.strictEqual(new Stack().getStack().length, 2)
-        assert.strictEqual(new Stack().getStack()[0], 10)
-        assert.strictEqual(new Stack().getStack()[1], 20)
+        assert.strictEqual(new Memory().getStack().length, 2)
+        assert.strictEqual(new Memory().getStack()[0], 10)
+        assert.strictEqual(new Memory().getStack()[1], 20)
     })
 })

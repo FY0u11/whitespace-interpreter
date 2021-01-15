@@ -1,8 +1,8 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class DuplicateNth implements IOperation {
-    run (arg?: string | number) {
-        new Stack().duplicate(arg as number)
+    run (arg: number) {
+        new Memory().duplicate(arg)
     }
 }

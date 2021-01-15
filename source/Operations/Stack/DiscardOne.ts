@@ -1,8 +1,8 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class DiscardOne implements IOperation {
     run () {
-        new Stack().discard()
+        new Memory().discard()
     }
 }

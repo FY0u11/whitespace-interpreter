@@ -1,8 +1,8 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class DuplicateOne implements IOperation {
     run () {
-        new Stack().duplicate()
+        new Memory().duplicate()
     }
 }

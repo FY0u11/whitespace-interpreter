@@ -20,7 +20,9 @@ export enum OperationTypes {
     ARITHMETICS_DIV =                   'ARITHMETICS_DIV',
     ARITHMETICS_MOD =                   'ARITHMETICS_MOD',
     IO_OUTPUT_NUMBER =                  'IO_OUTPUT_NUMBER',
-    FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT'
+    FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
+    HEAP_STORE =                        'HEAP_STORE',
+    HEAP_PUSH =                         'HEAP_PUSH'
 }
 
 export enum DataTypes {

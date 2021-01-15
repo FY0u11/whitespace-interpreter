@@ -57,6 +57,14 @@ const operations = {
                     operation: OperationTypes.IO_OUTPUT_NUMBER
                 }
             }
+        },
+        TAB: {
+            SPACE: {
+                operation: OperationTypes.HEAP_STORE
+            },
+            TAB: {
+                operation: OperationTypes.HEAP_PUSH
+            }
         }
     },
     NEW_LINE: {

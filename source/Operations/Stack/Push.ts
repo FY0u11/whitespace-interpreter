@@ -1,8 +1,8 @@
 import { IOperation } from '../IOperation'
-import { Stack } from '../../Stack/Stack'
+import { Memory } from '../../Memory/Memory'
 
 export class Push implements IOperation {
     run (number: number) {
-        new Stack().push(number)
+        new Memory().push(number)
     }
 }

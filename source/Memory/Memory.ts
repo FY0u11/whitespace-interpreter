@@ -1,15 +1,24 @@
-import { IStack } from './IStack'
+import { IMemory } from './IMemory'
 
-export class Stack implements IStack {
-    private static instance: Stack
+export class Memory implements IMemory {
+    private static instance: Memory
     private stack: number[] = []
+    private heap: number[] = []
 
     constructor () {
-        if (Stack.instance) {
-            return Stack.instance
+        if (Memory.instance) {
+            return Memory.instance
         }
 
-        Stack.instance = this
+        Memory.instance = this
+    }
+
+    heapGet (location: number): number | undefined {
+        return this.heap[location]
+    }
+
+    heapStore (location: number, value: number) {
+        this.heap[location] = value
     }
 
     push (number: number) {
@@ -63,7 +72,12 @@ export class Stack implements IStack {
         return [...this.stack]
     }
 
+    getHeap () {
+        return [...this.heap]
+    }
+
     reset () {
         this.stack = []
+        this.heap = []
     }
 }
