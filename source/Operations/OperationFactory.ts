@@ -15,6 +15,9 @@ import { OutputNumber } from './InputOutput/OutputNumber'
 import { Exit } from './FlowControl/Exit'
 import { Store } from './HeapAccess/Store'
 import { HeapPushInStack } from './HeapAccess/HeapPushInStack'
+import { OutputCharacter } from './InputOutput/OutputCharacter'
+import { ReadNumber } from './InputOutput/ReadNumber'
+import { ReadCharacter } from './InputOutput/ReadCharacter'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -31,6 +34,9 @@ export class OperationFactory {
            case OperationTypes.ARITHMETICS_DIV: return new Div()
            case OperationTypes.ARITHMETICS_MOD: return new Mod()
            case OperationTypes.IO_OUTPUT_NUMBER: return new OutputNumber()
+           case OperationTypes.IO_OUTPUT_CHARACTER: return new OutputCharacter()
+           case OperationTypes.IO_READ_NUMBER: return new ReadNumber()
+           case OperationTypes.IO_READ_CHARACTER: return new ReadCharacter()
            case OperationTypes.FLOW_CONTROL_EXIT: return new Exit()
            case OperationTypes.HEAP_PUSH: return new HeapPushInStack()
            case OperationTypes.HEAP_STORE: return new Store()

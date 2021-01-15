@@ -1,3 +1,5 @@
+import { Sentence } from './Sentence/Sentence'
+
 export const SPACE =                    'SPACE'
 export const TAB =                      'TAB'
 export const NEW_LINE =                 'NEW_LINE'
@@ -20,6 +22,9 @@ export enum OperationTypes {
     ARITHMETICS_DIV =                   'ARITHMETICS_DIV',
     ARITHMETICS_MOD =                   'ARITHMETICS_MOD',
     IO_OUTPUT_NUMBER =                  'IO_OUTPUT_NUMBER',
+    IO_OUTPUT_CHARACTER =               'IO_OUTPUT_CHARACTER',
+    IO_READ_NUMBER =                    'IO_READ_NUMBER',
+    IO_READ_CHARACTER =                 'IO_READ_CHARACTER',
     FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
     HEAP_STORE =                        'HEAP_STORE',
     HEAP_PUSH =                         'HEAP_PUSH'
@@ -27,7 +32,8 @@ export enum OperationTypes {
 
 export enum DataTypes {
     NUMBER =                            'NUMBER',
-    LABEL =                             'LABEL'
+    LABEL =                             'LABEL',
+    INPUT_STREAM =                      'INPUT_STREAM'
 }
 
 export type OperationObject = {
@@ -42,5 +48,15 @@ export enum SentenceStates {
     READY =                             'READY',
     IN_PROGRESS =                       'IN_PROGRESS',
     WAITING_FOR_NUMBER =                'WAITING_FOR_NUMBER',
-    WAITING_FOR_LABEL =                 'WAITING_FOR_LABEL'
+    WAITING_FOR_LABEL =                 'WAITING_FOR_LABEL',
+    WAITING_FOR_INPUT_STREAM =          'WAITING_FOR_INPUT_STREAM'
+}
+
+export type SentenceIterator = {
+    [Symbol.iterator](): {
+        next():  {
+            done: boolean,
+            value: Sentence | undefined
+        }
+    }
 }

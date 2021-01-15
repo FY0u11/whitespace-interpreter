@@ -1,45 +1,37 @@
-import { SentenceBuilder } from './Sentence/SentenceBuilder'
+import { SentencesBuilder } from './Sentence/SentencesBuilder'
 
 export class Whitespace {
     private readonly sourceCode: string
+    private readonly inputStream: string
     private output: string = ''
-    private isExited: boolean = false
 
-    constructor (sourceCode: string) {
+    constructor (sourceCode: string, inputStream: string = '') {
         this.sourceCode = sourceCode
+        this.inputStream = inputStream
     }
 
     readSourceCode (): string | void {
-        const sB = SentenceBuilder.getInstance()
-        for (let char of this.sourceCode) {
-            if (sB.setChar(char)) {
-                const sentence = sB.getSentence()
-                try {
+        const sB = new SentencesBuilder(this.sourceCode, this.inputStream)
+        for (let sentence of sB.buildSentences()) {
+            try {
+                if (sentence) {
                     const result = sentence.execute()
                     if (result) {
                         if (result === '$EXIT$') {
-                            this.isExited = true
-                            break
+                            return this.output
                         } else {
                             this.output += result
                         }
                     }
-                } catch (e) {
-                    throw new Error(e.message)
-                } finally {
-                    sB.reset()
                 }
+            } catch (e) {
+                throw new Error(e.message)
             }
-        }
-
-        if (this.isExited) {
-            this.isExited = false
-            if (this.output) return this.output
         }
     }
 }
 
-export function whitespace (n: string): string | void {
-    const ws = new Whitespace(n)
+export function whitespace (n: string, inputStream: string = ''): string | void {
+    const ws = new Whitespace(n, inputStream)
     return ws.readSourceCode()
 }

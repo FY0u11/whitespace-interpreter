@@ -1,5 +1,14 @@
 import { OperationFactory } from '../Operations/OperationFactory'
-import { SentenceStates, DataTypes, NEW_LINE, OperationObject, OperationTypes, SentenceChar, SPACE, TAB } from '../types'
+import {
+    DataTypes,
+    NEW_LINE,
+    OperationObject,
+    OperationTypes,
+    SentenceChar,
+    SentenceStates,
+    SPACE,
+    TAB
+} from '../types'
 
 const operations = {
     SPACE: {
@@ -55,6 +64,19 @@ const operations = {
             SPACE: {
                 TAB: {
                     operation: OperationTypes.IO_OUTPUT_NUMBER
+                },
+                SPACE: {
+                    operation: OperationTypes.IO_OUTPUT_CHARACTER
+                }
+            },
+            TAB: {
+                TAB: {
+                    operation: OperationTypes.IO_READ_NUMBER,
+                    argument: DataTypes.INPUT_STREAM
+                },
+                SPACE: {
+                    operation: OperationTypes.IO_READ_CHARACTER,
+                    argument: DataTypes.INPUT_STREAM
                 }
             }
         },
@@ -82,6 +104,7 @@ export class Sentence {
     private state: SentenceStates = SentenceStates.IN_PROGRESS
     private sign: typeof SPACE | typeof TAB | null = null
     private number: string | number = '0'
+    private inputStream: string | undefined = undefined
 
     public feed (sentenceChar: SentenceChar) {
         if (this.sentenceCharsChain[sentenceChar] !== undefined) {
@@ -105,6 +128,11 @@ export class Sentence {
         }
     }
 
+    feedInputStream (inputStream: string) {
+        this.inputStream = inputStream
+        this.state = SentenceStates.READY
+    }
+
     public getSentenceReadiness () {
         return this.state
     }
@@ -112,11 +140,12 @@ export class Sentence {
     public updateSentenceReadiness () {
         if (Object.keys(this.sentenceCharsChain).includes('operation')) {
             this.operationType = this.sentenceCharsChain.operation!
-            this.state = this.sentenceCharsChain.argument
-                ? this.sentenceCharsChain.argument === DataTypes.NUMBER
-                    ? SentenceStates.WAITING_FOR_NUMBER
-                    : SentenceStates.WAITING_FOR_LABEL
-                : SentenceStates.READY
+            switch (this.sentenceCharsChain.argument) {
+                case DataTypes.INPUT_STREAM: this.state = SentenceStates.WAITING_FOR_INPUT_STREAM; break
+                case DataTypes.NUMBER: this.state = SentenceStates.WAITING_FOR_NUMBER; break
+                case DataTypes.LABEL: this.state = SentenceStates.WAITING_FOR_LABEL; break
+                default: this.state = SentenceStates.READY
+            }
         }
     }
 
@@ -124,7 +153,7 @@ export class Sentence {
         if (this.state === SentenceStates.READY) {
             const operationFactory = new OperationFactory()
             const operation = operationFactory.getOperation(this.operationType!)
-            return operation.run(this.sign === SPACE ? this.number : -this.number)
+            return operation.run(this.sign === SPACE ? this.number : -this.number, this.inputStream !== undefined ? this.inputStream : null)
         }
     }
 
