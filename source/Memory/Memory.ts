@@ -6,6 +6,7 @@ export class Memory implements IMemory {
     private stack: number[] = []
     private heap: number[] = []
     private marks: Map<string, number> = new Map()
+    private subRoutineCallPosition: number[] = []
 
     constructor () {
         if (Memory.instance) {
@@ -94,5 +95,14 @@ export class Memory implements IMemory {
         this.stack = []
         this.heap = []
         this.marks = new Map()
+        this.subRoutineCallPosition = []
+    }
+
+    subRoutinePush (position: number) {
+        this.subRoutineCallPosition.push(position)
+    }
+
+    subRoutinePop (): number {
+        return this.subRoutineCallPosition.pop()!
     }
 }

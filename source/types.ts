@@ -30,6 +30,8 @@ export enum OperationTypes {
     FLOW_CONTROL_JUMP_ZERO =            'FLOW_CONTROL_JUMP_ZERO',
     FLOW_CONTROL_JUMP_LESS =            'FLOW_CONTROL_JUMP_LESS',
     FLOW_CONTROL_JUMP =                 'FLOW_CONTROL_JUMP',
+    FLOW_CONTROL_SUB_CALL =             'FLOW_CONTROL_SUB_CALL',
+    FLOW_CONTROL_SUB_EXIT =             'FLOW_CONTROL_SUB_EXIT',
     FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
     HEAP_STORE =                        'HEAP_STORE',
     HEAP_PUSH =                         'HEAP_PUSH'
@@ -73,5 +75,6 @@ export enum Errors {
     OUT_OF_BOUNDARY_INDEX = 'Out of boundary index',
     NO_SUCH_MARK = 'No such mark',
     MARKS_REPEAT = 'Marks repeat',
-    UNCLEAN_TERMINATION = 'Program wasn\'t correctly terminated'
+    UNCLEAN_TERMINATION = 'Program wasn\'t correctly terminated',
+    SUB_RETURN_OUTSIDE_SUB_CALL = 'Cannot return from subroutine outside of subroutine call'
 }

@@ -23,6 +23,4 @@ Each command in whitespace begins with an Instruction Modification Parameter (IM
 - [x] IMP [tab][space] - Arithmetic
 - [x] IMP [tab][tab] - Heap Access
 - [x] IMP [tab][line-feed] - Input/Output
-- [ ] IMP [line-feed] - Flow Control
-
-[01.15.2021] Working in progress ...
+- [x] IMP [line-feed] - Flow Control

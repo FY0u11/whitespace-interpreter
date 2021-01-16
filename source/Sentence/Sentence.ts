@@ -103,6 +103,10 @@ const operations = {
             NEW_LINE: {
                 operation: OperationTypes.FLOW_CONTROL_JUMP,
                 argument: DataTypes.LABEL
+            },
+            TAB: {
+                operation: OperationTypes.FLOW_CONTROL_SUB_CALL,
+                argument: DataTypes.LABEL
             }
         },
         TAB: {
@@ -113,6 +117,9 @@ const operations = {
             TAB: {
                 operation: OperationTypes.FLOW_CONTROL_JUMP_LESS,
                 argument: DataTypes.LABEL
+            },
+            NEW_LINE: {
+                operation: OperationTypes.FLOW_CONTROL_SUB_EXIT
             }
         }
     }

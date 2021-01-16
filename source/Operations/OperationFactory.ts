@@ -21,6 +21,8 @@ import { ReadCharacter } from './InputOutput/ReadCharacter'
 import { JumpZero } from './FlowControl/JumpZero'
 import { JumpLess } from './FlowControl/JumpLess'
 import { Jump } from './FlowControl/Jump'
+import { SubCall } from './FlowControl/SubCall'
+import { SubExit } from './FlowControl/SubExit'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -46,6 +48,8 @@ export class OperationFactory {
            case OperationTypes.FLOW_CONTROL_JUMP_ZERO: return new JumpZero()
            case OperationTypes.FLOW_CONTROL_JUMP_LESS: return new JumpLess()
            case OperationTypes.FLOW_CONTROL_JUMP: return new Jump()
+           case OperationTypes.FLOW_CONTROL_SUB_CALL: return new SubCall()
+           case OperationTypes.FLOW_CONTROL_SUB_EXIT: return new SubExit()
            default: throw new Error('Not implemented yet ' + type)
        }
     }

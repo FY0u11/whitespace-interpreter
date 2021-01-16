@@ -28,6 +28,8 @@ enum OperationTypes {
     FLOW_CONTROL_JUMP_ZERO =            'FLOW_CONTROL_JUMP_ZERO',
     FLOW_CONTROL_JUMP_LESS =            'FLOW_CONTROL_JUMP_LESS',
     FLOW_CONTROL_JUMP =                 'FLOW_CONTROL_JUMP',
+    FLOW_CONTROL_SUB_CALL =             'FLOW_CONTROL_SUB_CALL',
+    FLOW_CONTROL_SUB_EXIT =             'FLOW_CONTROL_SUB_EXIT',
     FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
     HEAP_STORE =                        'HEAP_STORE',
     HEAP_PUSH =                         'HEAP_PUSH'
@@ -71,7 +73,8 @@ enum Errors {
     OUT_OF_BOUNDARY_INDEX = 'Out of boundary index',
     NO_SUCH_MARK = 'No such mark',
     MARKS_REPEAT = 'Marks repeat',
-    UNCLEAN_TERMINATION = 'Program wasn\'t correctly terminated'
+    UNCLEAN_TERMINATION = 'Program wasn\'t correctly terminated',
+    SUB_RETURN_OUTSIDE_SUB_CALL = 'Cannot return from subroutine outside of subroutine call'
 }
 
 class Utils {
@@ -108,6 +111,7 @@ class Memory implements IMemory {
     private stack: number[] = []
     private heap: number[] = []
     private marks: Map<string, number> = new Map()
+    private subRoutineCallPosition: number[] = []
 
     constructor () {
         if (Memory.instance) {
@@ -197,6 +201,15 @@ class Memory implements IMemory {
         this.heap = []
         this.marks = new Map()
     }
+
+
+    subRoutinePush (position: number) {
+        this.subRoutineCallPosition.push(position)
+    }
+
+    subRoutinePop (): number {
+        return this.subRoutineCallPosition.pop()!
+    }
 }
 
 interface IOperation {
@@ -281,6 +294,22 @@ class JumpZero implements IOperation {
             const [mark,] = arg.split(':')
             return JUMP_COMMAND + new Memory().getPosition(mark).toString()
         }
+    }
+}
+
+class SubCall implements IOperation {
+    run (arg: string): void | string {
+        const [mark, location] = arg.split(':')
+        new Memory().subRoutinePush(Number.parseInt(location))
+        return JUMP_COMMAND + new Memory().getPosition(mark).toString()
+    }
+}
+
+class SubExit implements IOperation {
+    run (): string {
+        const backPosition = new Memory().subRoutinePop()
+        if (backPosition === undefined) throw new Error (Errors.SUB_RETURN_OUTSIDE_SUB_CALL)
+        return JUMP_COMMAND + backPosition.toString()
     }
 }
 
@@ -393,6 +422,8 @@ class OperationFactory {
             case OperationTypes.FLOW_CONTROL_JUMP_ZERO: return new JumpZero()
             case OperationTypes.FLOW_CONTROL_JUMP_LESS: return new JumpLess()
             case OperationTypes.FLOW_CONTROL_JUMP: return new Jump()
+            case OperationTypes.FLOW_CONTROL_SUB_CALL: return new SubCall()
+            case OperationTypes.FLOW_CONTROL_SUB_EXIT: return new SubExit()
             default: throw new Error('Not implemented yet ' + type)
         }
     }
@@ -491,6 +522,10 @@ const operations = {
             NEW_LINE: {
                 operation: OperationTypes.FLOW_CONTROL_JUMP,
                 argument: DataTypes.LABEL
+            },
+            TAB: {
+                operation: OperationTypes.FLOW_CONTROL_SUB_CALL,
+                argument: DataTypes.LABEL
             }
         },
         TAB: {
@@ -501,6 +536,9 @@ const operations = {
             TAB: {
                 operation: OperationTypes.FLOW_CONTROL_JUMP_LESS,
                 argument: DataTypes.LABEL
+            },
+            NEW_LINE: {
+                operation: OperationTypes.FLOW_CONTROL_SUB_EXIT
             }
         }
     }
