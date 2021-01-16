@@ -19,6 +19,9 @@ export class Whitespace {
                     if (result) {
                         if (result === '$EXIT$') {
                             return this.output
+                        } else if (/\$JUMP\$/.test(result)) {
+                            const [, position] = result.split(':')
+                            sB.sourceCodePointer = Number.parseInt(position)
                         } else {
                             this.output += result
                         }

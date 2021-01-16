@@ -4,6 +4,7 @@ export const SPACE =                    'SPACE'
 export const TAB =                      'TAB'
 export const NEW_LINE =                 'NEW_LINE'
 export const EXIT_COMMAND =             '$EXIT$'
+export const JUMP_COMMAND =             '$JUMP$:'
 export const allowedCharacters =        { ' ': SPACE, '\t' : TAB, '\n' : NEW_LINE }
 export type SentenceChar =              typeof SPACE
                                       | typeof TAB
@@ -26,6 +27,9 @@ export enum OperationTypes {
     IO_READ_NUMBER =                    'IO_READ_NUMBER',
     IO_READ_CHARACTER =                 'IO_READ_CHARACTER',
     FLOW_CONTROL_MARK =                 'FLOW_CONTROL_MARK',
+    FLOW_CONTROL_JUMP_ZERO =            'FLOW_CONTROL_JUMP_ZERO',
+    FLOW_CONTROL_JUMP_LESS =            'FLOW_CONTROL_JUMP_LESS',
+    FLOW_CONTROL_JUMP =                 'FLOW_CONTROL_JUMP',
     FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
     HEAP_STORE =                        'HEAP_STORE',
     HEAP_PUSH =                         'HEAP_PUSH'
@@ -66,5 +70,6 @@ export enum Errors {
     STACK_IS_EMPTY = 'Stack is empty. Cannot perform requested operation',
     STACK_LESS_THAN_2 = 'Stack has less than 2 values. Cannot perform requested operation',
     DIVISION_BY_ZERO = 'Can not perform division by 0',
-    OUT_OF_BOUNDARY_INDEX = 'Out of boundary index'
+    OUT_OF_BOUNDARY_INDEX = 'Out of boundary index',
+    NO_SUCH_MARK = 'No such mark'
 }

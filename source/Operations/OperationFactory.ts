@@ -19,6 +19,9 @@ import { OutputCharacter } from './InputOutput/OutputCharacter'
 import { ReadNumber } from './InputOutput/ReadNumber'
 import { ReadCharacter } from './InputOutput/ReadCharacter'
 import { Mark } from './FlowControl/Mark'
+import { JumpZero } from './FlowControl/JumpZero'
+import { JumpLess } from './FlowControl/JumpLess'
+import { Jump } from './FlowControl/Jump'
 
 export class OperationFactory {
     getOperation (type: OperationTypes): IOperation {
@@ -42,6 +45,9 @@ export class OperationFactory {
            case OperationTypes.HEAP_PUSH: return new HeapPushInStack()
            case OperationTypes.HEAP_STORE: return new Store()
            case OperationTypes.FLOW_CONTROL_MARK: return new Mark()
+           case OperationTypes.FLOW_CONTROL_JUMP_ZERO: return new JumpZero()
+           case OperationTypes.FLOW_CONTROL_JUMP_LESS: return new JumpLess()
+           case OperationTypes.FLOW_CONTROL_JUMP: return new Jump()
            default: throw new Error('Not implemented yet ' + type)
        }
     }

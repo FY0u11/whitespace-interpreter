@@ -76,6 +76,11 @@ export class Memory implements IMemory {
         this.marks.set(mark, Number.parseInt(position))
     }
 
+    getPosition (mark: string): number {
+        if (!this.marks.get(mark)) throw new Error(Errors.NO_SUCH_MARK)
+        return this.marks.get(mark)!
+    }
+
     getStack () {
         return [...this.stack]
     }

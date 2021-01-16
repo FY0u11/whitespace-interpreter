@@ -5,7 +5,7 @@ export class SentencesBuilder {
     private inputTimes: number = 0
     private readonly inputStream: string[] = []
     private readonly sourceCode: string
-    private sourceCodePointer: number = 0
+    private _sourceCodePointer: number = 0
 
     constructor (sourceCode: string, inputStreamString: string = '') {
         this.sourceCode = sourceCode
@@ -34,15 +34,15 @@ export class SentencesBuilder {
                             if (sentence.getSentenceReadiness() === SentenceStates.IN_PROGRESS ||
                                 sentence.getSentenceReadiness() === SentenceStates.WAITING_FOR_LABEL ||
                                 sentence.getSentenceReadiness() === SentenceStates.WAITING_FOR_NUMBER) {
-                                if (that.sourceCode.length === that.sourceCodePointer) {
+                                if (that.sourceCode.length === that._sourceCodePointer) {
                                     done = true
                                     break
                                 }
-                                const currentChar = SentencesBuilder.parseChar(that.sourceCode[that.sourceCodePointer++])
+                                const currentChar = SentencesBuilder.parseChar(that.sourceCode[that._sourceCodePointer++])
                                 if (currentChar) {
                                     switch (sentence.getSentenceReadiness()) {
                                         case SentenceStates.IN_PROGRESS: sentence.feed(currentChar); break
-                                        case SentenceStates.WAITING_FOR_LABEL: sentence.feedLabel(currentChar, that.sourceCodePointer); break
+                                        case SentenceStates.WAITING_FOR_LABEL: sentence.feedLabel(currentChar, that._sourceCodePointer); break
                                         case SentenceStates.WAITING_FOR_NUMBER: sentence.feedNumber(currentChar); break
                                     }
                                 }
@@ -61,5 +61,9 @@ export class SentencesBuilder {
                 }
             }
         }
+    }
+
+    set sourceCodePointer (value: number) {
+        this._sourceCodePointer = value
     }
 }

@@ -99,6 +99,20 @@ const operations = {
             SPACE: {
                 operation: OperationTypes.FLOW_CONTROL_MARK,
                 argument: DataTypes.LABEL
+            },
+            NEW_LINE: {
+                operation: OperationTypes.FLOW_CONTROL_JUMP,
+                argument: DataTypes.LABEL
+            }
+        },
+        TAB: {
+            SPACE: {
+                operation: OperationTypes.FLOW_CONTROL_JUMP_ZERO,
+                argument: DataTypes.LABEL
+            },
+            TAB: {
+                operation: OperationTypes.FLOW_CONTROL_JUMP_LESS,
+                argument: DataTypes.LABEL
             }
         }
     }
