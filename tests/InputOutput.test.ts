@@ -3,6 +3,7 @@ import { Whitespace, whitespace } from '../source/Whitespace'
 import { beforeEach } from 'mocha'
 import { Memory } from '../source/Memory/Memory'
 import { Utils } from '../source/Utils'
+import { Errors } from '../source/types'
 
 beforeEach(() => {
     new Memory().reset()
@@ -19,10 +20,12 @@ describe('Input output tests: OUTPUT_NUMBER operation', () => {
         whitespace('\t\n \t')
         assert.strictEqual(new Memory().getStack().length, 1)
     })
-    it('Should do nothing when stack.length <= 1', () => {
-        const result = whitespace('\t\n \t')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(result, undefined)
+    it('Should throw an Error when Stack is empty', () => {
+        try {
+           whitespace('\t\n \t')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
+        }
     })
 })
 
@@ -37,18 +40,20 @@ describe('Input output tests: OUTPUT_CHARACTER operation', () => {
         whitespace('\t\n  ')
         assert.strictEqual(new Memory().getStack().length, 0)
     })
-    it('Should do nothing when stack.length <= 1', () => {
-        const result = whitespace('\t\n  ')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(result, undefined)
+    it('Should throw an Error when Stack is empty', () => {
+        try {
+            whitespace('\t\n  ')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
+        }
     })
 })
 
 describe('Input output tests: READ_NUMBER operation', () => {
     it('Should read a number from input stream and store it in heap address (top value of stack)', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(10))
-        whitespace('\t\n\t\t', '42')
-        assert.strictEqual(new Memory().getHeap()[10], 42)
+        whitespace('\t\n\t\t', '4')
+        assert.strictEqual(new Memory().getHeap()[10], 4)
     })
     it('Should input several numbers in one input stream', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(0, 1, 2))
@@ -64,13 +69,15 @@ describe('Input output tests: READ_NUMBER operation', () => {
         assert.strictEqual(new Memory().getHeap().length, 1)
         assert.strictEqual(new Memory().getHeap()[0], 0)
     })
-    it('Should do nothing if Stack.length = 0', () => {
-        whitespace('\t\n\t\t', '42')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(new Memory().getHeap().length, 0)
+    it('Should throw an Error when Stack is empty', () => {
+        try {
+            whitespace('\t\n\t\t')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
+        }
     })
     it('Should do nothing if input stream is not a number', () => {
-        whitespace('\t\n\t\t', 'Hello, world')
+        whitespace('   \t\n\t\n\t\t', 'Hello, world')
         assert.strictEqual(new Memory().getStack().length, 0)
         assert.strictEqual(new Memory().getHeap().length, 0)
     })
@@ -96,14 +103,15 @@ describe('Input output tests: READ_CHARACTER operation', () => {
         assert.strictEqual(new Memory().getHeap().length, 1)
         assert.strictEqual(new Memory().getHeap()[0], 48)
     })
-    it('Should do nothing if Stack.length = 0', () => {
-        whitespace('\t\n\t ', 'A')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(new Memory().getHeap().length, 0)
+    it('Should throw an Error when Stack is empty', () => {
+        try {
+            whitespace('\t\n\t ')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
+        }
     })
-    it('Should do nothing if input stream contains more than 1 character', () => {
-        whitespace('\t\n\t ', 'Hello, world')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(new Memory().getHeap().length, 0)
+    it('Should accept char by char when input stream has more than 1 symbol', () => {
+        const result = whitespace('   \n\t\n\t    \t\n\t\n\t    \t \n\t\n\t    \n\t\t\t   \t\n\t\t\t   \t \n\t\t\t\t\n  \t\n  \t\n  \n\n\n', 'Hello, world')
+        assert.strictEqual(result, 'leH')
     })
 })

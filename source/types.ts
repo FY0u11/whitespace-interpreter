@@ -60,3 +60,10 @@ export type SentenceIterator = {
         }
     }
 }
+
+export enum Errors {
+    STACK_IS_EMPTY = 'Stack is empty. Cannot perform requested operation',
+    STACK_LESS_THAN_2 = 'Stack has less than 2 values. Cannot perform requested operation',
+    DIVISION_BY_ZERO = 'Can not perform division by 0',
+    OUT_OF_BOUNDARY_INDEX = 'Out of boundary index'
+}

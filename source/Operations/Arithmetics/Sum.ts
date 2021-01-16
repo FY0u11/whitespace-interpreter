@@ -1,11 +1,12 @@
 import { IOperation } from '../IOperation'
 import { Memory } from '../../Memory/Memory'
+import { Errors } from '../../types'
 
 export class Sum implements IOperation {
     run () {
-        const stack = new Memory().getStack()
-        const n1 = stack.pop()
-        const n2 = stack.pop()
-        if (n1 !== undefined && n2 !== undefined) new Memory().push(n1 + n2)
+        if (new Memory().getStack().length <= 1) throw new Error (Errors.STACK_LESS_THAN_2)
+        const n1 = new Memory().pop()
+        const n2 = new Memory().pop()
+        new Memory().push(n1 + n2)
     }
 }

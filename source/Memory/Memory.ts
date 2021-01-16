@@ -1,4 +1,5 @@
 import { IMemory } from './IMemory'
+import { Errors } from '../types'
 
 export class Memory implements IMemory {
     private static instance: Memory
@@ -25,22 +26,23 @@ export class Memory implements IMemory {
         this.stack.push(number)
     }
 
-    pop (): number | undefined {
-        return this.stack.pop()
+    pop (): number {
+        if (!this.stack.length) throw new Error(Errors.STACK_IS_EMPTY)
+        return this.stack.pop()!
     }
 
     swap () {
-        if (this.stack.length >= 2) {
-            const length = this.stack.length
-            let tmp = this.stack[length - 1]
-            this.stack[length - 1] = this.stack[length - 2]
-            this.stack[length - 2] = tmp
-        }
+        if (this.stack.length <= 1) throw new Error(Errors.STACK_LESS_THAN_2)
+        const length = this.stack.length
+        let tmp = this.stack[length - 1]
+        this.stack[length - 1] = this.stack[length - 2]
+        this.stack[length - 2] = tmp
     }
 
     discard (): void
     discard (n: number): void
     discard (n?: number): void {
+        if (!this.stack.length) throw new Error(Errors.STACK_IS_EMPTY)
         if (!n) {
             this.stack.pop()
         } else {
@@ -57,13 +59,14 @@ export class Memory implements IMemory {
     duplicate (): void
     duplicate (n: number): void
     duplicate (n?: number): void {
+        if (!this.stack.length) throw new Error(Errors.STACK_IS_EMPTY)
         if (this.stack.length) {
             if (!n) {
                 this.stack.push(this.stack[this.stack.length - 1])
             } else {
-                if (this.stack[n]) {
-                    this.stack.push(this.stack[n])
-                }
+                if (this.stack[this.stack.length - n - 1]) {
+                    this.stack.push(this.stack[this.stack.length - n - 1])
+                } else throw new Error(Errors.OUT_OF_BOUNDARY_INDEX)
             }
         }
     }

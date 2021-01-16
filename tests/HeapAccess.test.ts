@@ -2,6 +2,7 @@ import * as assert from 'assert'
 import { whitespace } from '../source/Whitespace'
 import { Utils } from '../source/Utils'
 import { Memory } from '../source/Memory/Memory'
+import { Errors } from '../source/types'
 
 beforeEach(() => {
     new Memory().reset()
@@ -41,11 +42,13 @@ describe ('Heap Access tests: STORE operation', () => {
         assert.strictEqual(new Memory().getStack().length, 0)
         randomNumbers.forEach((n, i) => assert.strictEqual(new Memory().getHeap()[i], n))
     })
-    it ('Should do nothing when Stack.length <= 1, but clean the Stack', () => {
+    it ('Should throw an Error when Stack.length <= 1', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(15))
-        whitespace('\t\t ')
-        assert.strictEqual(new Memory().getHeap().length, 0)
-        assert.strictEqual(new Memory().getStack().length, 0)
+        try {
+            whitespace('\t\t ')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_LESS_THAN_2)
+        }
     })
 })
 
@@ -68,10 +71,12 @@ describe('Heap Access tests: PUSH operation', () => {
         assert.strictEqual(new Memory().getStack().length, 1)
         assert.strictEqual(new Memory().getStack()[0], 0)
     })
-    it('It should do nothing when Stack.length = 0', () => {
-        whitespace('\t\t\t')
-        assert.strictEqual(new Memory().getStack().length, 0)
-        assert.strictEqual(new Memory().getHeap().length, 0)
+    it('It should throw an Error when Stack is empty', () => {
+        try {
+            whitespace('\t\t\t')
+        } catch (e) {
+            assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
+        }
     })
     it('It should do nothing when heap with address A is empty but pop A', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(25))

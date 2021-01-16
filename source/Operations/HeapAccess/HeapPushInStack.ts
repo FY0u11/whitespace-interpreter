@@ -4,11 +4,9 @@ import { Memory } from '../../Memory/Memory'
 export class HeapPushInStack implements IOperation {
     run () {
         const location = new Memory().pop()
-        if (location !== undefined) {
-            const valueToPush = new Memory().heapGet(location)
-            if (valueToPush !== undefined) {
-                new Memory().push(valueToPush)
-            }
+        const valueToPush = new Memory().heapGet(location)
+        if (valueToPush !== undefined) {
+            new Memory().push(valueToPush)
         }
     }
 }

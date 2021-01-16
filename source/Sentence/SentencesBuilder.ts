@@ -9,7 +9,13 @@ export class SentencesBuilder {
 
     constructor (sourceCode: string, inputStreamString: string = '') {
         this.sourceCode = sourceCode
+        if (inputStreamString.includes('\n'))
         this.inputStream = inputStreamString.split('\n')
+        else {
+            let tmp = []
+            for (let char of inputStreamString) tmp.push(char)
+            this.inputStream = tmp
+        }
     }
 
     private static parseChar (char: string): SentenceChar | null {

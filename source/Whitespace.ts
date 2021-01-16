@@ -31,7 +31,8 @@ export class Whitespace {
     }
 }
 
-export function whitespace (n: string, inputStream: string = ''): string | void {
-    const ws = new Whitespace(n, inputStream)
+export function whitespace (sourceCode: string, inputStream: string = ''): string | void {
+    if (!sourceCode) throw new Error('Source code cannot be empty')
+    const ws = new Whitespace(sourceCode, inputStream)
     return ws.readSourceCode()
 }

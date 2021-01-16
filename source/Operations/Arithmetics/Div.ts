@@ -1,14 +1,13 @@
 import { IOperation } from '../IOperation'
 import { Memory } from '../../Memory/Memory'
+import { Errors } from '../../types'
 
 export class Div implements IOperation {
     run () {
-        const stack = new Memory().getStack()
-        const n1 = stack.pop()
-        const n2 = stack.pop()
-        if (n1 !== undefined && n2 !== undefined) {
-            if (n1 === 0 || n1 === -0) throw new Error('Can not perform division by 0')
-            else new Memory().push(~~(n2 / n1))
-        }
+        if (new Memory().getStack().length <= 1) throw new Error (Errors.STACK_LESS_THAN_2)
+        const n1 = new Memory().pop()
+        const n2 = new Memory().pop()
+        if (n1 === 0 || n1 === -0) throw new Error(Errors.DIVISION_BY_ZERO)
+        else new Memory().push(Math.floor(n2 / n1))
     }
 }
