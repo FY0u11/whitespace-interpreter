@@ -25,6 +25,7 @@ export enum OperationTypes {
     IO_OUTPUT_CHARACTER =               'IO_OUTPUT_CHARACTER',
     IO_READ_NUMBER =                    'IO_READ_NUMBER',
     IO_READ_CHARACTER =                 'IO_READ_CHARACTER',
+    FLOW_CONTROL_MARK =                 'FLOW_CONTROL_MARK',
     FLOW_CONTROL_EXIT =                 'FLOW_CONTROL_EXIT',
     HEAP_STORE =                        'HEAP_STORE',
     HEAP_PUSH =                         'HEAP_PUSH'

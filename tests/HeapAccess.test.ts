@@ -53,7 +53,7 @@ describe ('Heap Access tests: STORE operation', () => {
 })
 
 describe('Heap Access tests: PUSH operation', () => {
-    it('It should pop A and then push the value at heap address A into the stack.', () => {
+    it('Should pop A and then push the value at heap address A into the stack.', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(10, 20))
         whitespace('\t\t ')
         assert.strictEqual(new Memory().getStack().length, 0)
@@ -62,7 +62,7 @@ describe('Heap Access tests: PUSH operation', () => {
         assert.strictEqual(new Memory().getStack().length, 1)
         assert.strictEqual(new Memory().getStack()[0], 20)
     })
-    it('It should pop 0 and then push the value 0 at heap address 0 into the stack.', () => {
+    it('Should pop 0 and then push the value 0 at heap address 0 into the stack.', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(0, 0))
         whitespace('\t\t ')
         assert.strictEqual(new Memory().getStack().length, 0)
@@ -71,14 +71,14 @@ describe('Heap Access tests: PUSH operation', () => {
         assert.strictEqual(new Memory().getStack().length, 1)
         assert.strictEqual(new Memory().getStack()[0], 0)
     })
-    it('It should throw an Error when Stack is empty', () => {
+    it('Should throw an Error when Stack is empty', () => {
         try {
             whitespace('\t\t\t')
         } catch (e) {
             assert.strictEqual(e.message, Errors.STACK_IS_EMPTY)
         }
     })
-    it('It should do nothing when heap with address A is empty but pop A', () => {
+    it('Should do nothing when heap with address A is empty but pop A', () => {
         whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(25))
         whitespace('\t\t\t')
         assert.strictEqual(new Memory().getStack().length, 0)

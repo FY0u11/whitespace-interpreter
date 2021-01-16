@@ -5,6 +5,7 @@ export class Memory implements IMemory {
     private static instance: Memory
     private stack: number[] = []
     private heap: number[] = []
+    private marks: Map<string, number> = new Map()
 
     constructor () {
         if (Memory.instance) {
@@ -69,6 +70,10 @@ export class Memory implements IMemory {
                 } else throw new Error(Errors.OUT_OF_BOUNDARY_INDEX)
             }
         }
+    }
+
+    saveMark (mark: string, position: string) {
+        this.marks.set(mark, Number.parseInt(position))
     }
 
     getStack () {

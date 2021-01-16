@@ -94,6 +94,12 @@ const operations = {
             NEW_LINE: {
                 operation: OperationTypes.FLOW_CONTROL_EXIT
             }
+        },
+        SPACE: {
+            SPACE: {
+                operation: OperationTypes.FLOW_CONTROL_MARK,
+                argument: DataTypes.LABEL
+            }
         }
     }
 }
@@ -104,6 +110,7 @@ export class Sentence {
     private state: SentenceStates = SentenceStates.IN_PROGRESS
     private sign: typeof SPACE | typeof TAB | null = null
     private number: string | number = '0'
+    private label: string = ''
     private inputStream: string | undefined = undefined
 
     public feed (sentenceChar: SentenceChar) {
@@ -153,11 +160,20 @@ export class Sentence {
         if (this.state === SentenceStates.READY) {
             const operationFactory = new OperationFactory()
             const operation = operationFactory.getOperation(this.operationType!)
-            return operation.run(this.sign === SPACE ? this.number : -this.number, this.inputStream !== undefined ? this.inputStream : null)
+            if (this.label) {
+                return operation.run(this.label)
+            } else {
+                return operation.run(this.sign === SPACE ? this.number : -this.number, this.inputStream !== undefined ? this.inputStream : null)
+            }
         }
     }
 
-    feedLabel (sentenceChar: SentenceChar) {
-        // TODO
+    feedLabel (sentenceChar: SentenceChar, position: number) {
+        if (sentenceChar === NEW_LINE) {
+            this.state = SentenceStates.READY
+            this.label += '\n:' + position.toString(10)
+        } else {
+            this.label += sentenceChar === SPACE ? ' ' : '\t'
+        }
     }
 }

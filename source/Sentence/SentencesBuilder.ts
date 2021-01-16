@@ -42,7 +42,7 @@ export class SentencesBuilder {
                                 if (currentChar) {
                                     switch (sentence.getSentenceReadiness()) {
                                         case SentenceStates.IN_PROGRESS: sentence.feed(currentChar); break
-                                        case SentenceStates.WAITING_FOR_LABEL: sentence.feedLabel(currentChar); break
+                                        case SentenceStates.WAITING_FOR_LABEL: sentence.feedLabel(currentChar, that.sourceCodePointer); break
                                         case SentenceStates.WAITING_FOR_NUMBER: sentence.feedNumber(currentChar); break
                                     }
                                 }
