@@ -73,6 +73,7 @@ export class Memory implements IMemory {
     }
 
     saveMark (mark: string, position: string) {
+        if (this.marks.has(mark)) throw new Error(Errors.MARKS_REPEAT)
         this.marks.set(mark, Number.parseInt(position))
     }
 
@@ -92,5 +93,6 @@ export class Memory implements IMemory {
     reset () {
         this.stack = []
         this.heap = []
+        this.marks = new Map()
     }
 }

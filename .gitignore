@@ -3,4 +3,3 @@ node_modules
 dist
 package-lock.json
 source/index.ts
-source/CodeWars/code.ts

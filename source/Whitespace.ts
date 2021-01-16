@@ -1,4 +1,5 @@
 import { SentencesBuilder } from './Sentence/SentencesBuilder'
+import { Errors } from './types'
 
 export class Whitespace {
     private readonly sourceCode: string
@@ -12,6 +13,7 @@ export class Whitespace {
 
     readSourceCode (): string | void {
         const sB = new SentencesBuilder(this.sourceCode, this.inputStream)
+        sB.findMarks()
         for (let sentence of sB.buildSentences()) {
             try {
                 if (sentence) {
@@ -31,6 +33,7 @@ export class Whitespace {
                 throw new Error(e.message)
             }
         }
+        throw new Error(Errors.UNCLEAN_TERMINATION)
     }
 }
 

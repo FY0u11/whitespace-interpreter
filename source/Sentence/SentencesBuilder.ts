@@ -1,10 +1,11 @@
 import { Sentence } from './Sentence'
-import { allowedCharacters, SentenceChar, SentenceIterator, SentenceStates } from '../types'
+import { allowedCharacters, SentenceChar, SentenceIterator, SentenceStates, OperationTypes } from '../types'
+import { Memory } from '../Memory/Memory'
 
 export class SentencesBuilder {
     private inputTimes: number = 0
     private readonly inputStream: string[] = []
-    private readonly sourceCode: string
+    private sourceCode: string
     private _sourceCodePointer: number = 0
 
     constructor (sourceCode: string, inputStreamString: string = '') {
@@ -28,7 +29,7 @@ export class SentencesBuilder {
             [Symbol.iterator]() {
                 return {
                     next () {
-                        const sentence = new Sentence()
+                        const sentence = new Sentence(that._sourceCodePointer)
                         let done = false
                         while (sentence.getSentenceReadiness() !== SentenceStates.READY) {
                             if (sentence.getSentenceReadiness() === SentenceStates.IN_PROGRESS ||
@@ -59,6 +60,21 @@ export class SentencesBuilder {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    findMarks () {
+        const sB = new SentencesBuilder(this.sourceCode)
+        let acc = 0
+        for (let sentence of sB.buildSentences()) {
+            if (sentence && sentence.operationType === OperationTypes.FLOW_CONTROL_MARK) {
+                const [mark, position] = sentence.label.split(':')
+                const diff = Number.parseInt(position) - sentence.startPosition
+                const newPosition = (Number.parseInt(position) - diff - acc).toString()
+                this.sourceCode = this.sourceCode.substring(0, sentence.startPosition - acc) + this.sourceCode.substring(Number.parseInt(position) - acc, this.sourceCode.length)
+                new Memory().saveMark(mark, newPosition)
+                acc += diff
             }
         }
     }

@@ -120,12 +120,14 @@ const operations = {
 
 export class Sentence {
     private sentenceCharsChain: OperationObject = operations
-    private operationType: OperationTypes | null = null
+    private _operationType: OperationTypes | null = null
     private state: SentenceStates = SentenceStates.IN_PROGRESS
     private sign: typeof SPACE | typeof TAB | null = null
     private number: string | number = '0'
-    private label: string = ''
+    private _label: string = ''
     private inputStream: string | undefined = undefined
+
+    constructor (private readonly _startPosition: number) {}
 
     public feed (sentenceChar: SentenceChar) {
         if (this.sentenceCharsChain[sentenceChar] !== undefined) {
@@ -160,7 +162,7 @@ export class Sentence {
 
     public updateSentenceReadiness () {
         if (Object.keys(this.sentenceCharsChain).includes('operation')) {
-            this.operationType = this.sentenceCharsChain.operation!
+            this._operationType = this.sentenceCharsChain.operation!
             switch (this.sentenceCharsChain.argument) {
                 case DataTypes.INPUT_STREAM: this.state = SentenceStates.WAITING_FOR_INPUT_STREAM; break
                 case DataTypes.NUMBER: this.state = SentenceStates.WAITING_FOR_NUMBER; break
@@ -173,9 +175,9 @@ export class Sentence {
     public execute (): void | string {
         if (this.state === SentenceStates.READY) {
             const operationFactory = new OperationFactory()
-            const operation = operationFactory.getOperation(this.operationType!)
-            if (this.label) {
-                return operation.run(this.label)
+            const operation = operationFactory.getOperation(this._operationType!)
+            if (this._label) {
+                return operation.run(this._label)
             } else {
                 return operation.run(this.sign === SPACE ? this.number : -this.number, this.inputStream !== undefined ? this.inputStream : null)
             }
@@ -185,9 +187,21 @@ export class Sentence {
     feedLabel (sentenceChar: SentenceChar, position: number) {
         if (sentenceChar === NEW_LINE) {
             this.state = SentenceStates.READY
-            this.label += '\n:' + position.toString(10)
+            this._label += '\n:' + position.toString(10)
         } else {
-            this.label += sentenceChar === SPACE ? ' ' : '\t'
+            this._label += sentenceChar === SPACE ? ' ' : '\t'
         }
+    }
+
+    get operationType (): OperationTypes | null {
+        return this._operationType
+    }
+
+    get label (): string {
+        return this._label
+    }
+
+    get startPosition (): number {
+        return this._startPosition
     }
 }

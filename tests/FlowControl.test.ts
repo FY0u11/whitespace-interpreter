@@ -10,19 +10,15 @@ beforeEach(() => {
 
 describe('Flow control tests: EXIT operation', () => {
     it('Should successfully exit and return some output', () => {
-        whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(144, 56))
-        const result = whitespace('\t   \t\n \t\n\n\n')
+        const result = whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(144, 56) + '\t   \t\n \t\n\n\n')
         assert.strictEqual(result, '200')
     })
-    it('Should output nothing because program is not exited', () => {
-        whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(144, 56))
-        const result = whitespace('\t   \t\n \t')
-        assert.strictEqual(result, undefined)
-    })
-    it('Should clean the stack when program is exited', () => {
-        whitespace(Utils.getSourceCodeForPushingNNumbersIntoTheStack(1, 2, 3, 4, 5))
-        whitespace('\n\n\n')
-        assert.strictEqual(new Memory().getStack().length, 0)
+    it ('Should throw an Error if program wasn\'t exited', () => {
+        try {
+            whitespace(' ')
+        } catch (e) {
+            assert.strictEqual(e.message, 'Program wasn\'t correctly terminated')
+        }
     })
     it('Should ignore all source code after \\n\\n\\n', () => {
         whitespace('\n\n\n' + Utils.getSourceCodeForPushingNNumbersIntoTheStack())
